@@ -174,6 +174,7 @@ public class MainFrame extends javax.swing.JFrame {
        Categoria cg = new Categoria();
         Desktop.add(cg);
         cg.setVisible(true);
+        
     }//GEN-LAST:event_mnuCategoriaActionPerformed
 
     private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed
@@ -250,7 +251,9 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new MainFrame().setVisible(true);
+                
             }
         });
     }

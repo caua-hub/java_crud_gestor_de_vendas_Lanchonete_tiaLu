@@ -4,6 +4,15 @@
  */
 package MyFrames;
 
+import Conexao.Conexao;
+import Dao.CategoriasDAO;
+import Model.Categorias;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author joaoa
@@ -27,69 +36,135 @@ public class Categoria extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabelDesc = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNomeCategoria = new javax.swing.JTextField();
         jButtonCadastrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCadastros = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Categorias");
 
-        jLabelDesc.setText("Descrição");
+        jLabelDesc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelDesc.setText("Nome da categoria");
+
+        jTextFieldNomeCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNomeCategoriaActionPerformed(evt);
+            }
+        });
+        jTextFieldNomeCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldNomeCategoriaKeyReleased(evt);
+            }
+        });
 
         jButtonCadastrar.setText("CADASTRAR");
+        jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadastrarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCadastros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Nome"
+                "Categorias"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableCadastros);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(109, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(81, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(77, 77, 77))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jLabelDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCadastrar)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
+        // TODO add your handling code here:
+        
+        String categoria = jTextFieldNomeCategoria.getText();
+        Categorias cat = new Categorias(categoria);
+        
+        CategoriasDAO.inserir(cat);
+        
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
+
+        DefaultTableModel modelo = (DefaultTableModel) jTableCadastros.getModel();
+        modelo.setNumRows(0); // limpa tabela
+
+        try {
+
+            conn = Conexao.conectar();
+
+            stmt = conn.prepareStatement("SELECT * FROM categorias");
+
+            rs = stmt.executeQuery();
+
+        while(rs.next()){
+
+            modelo.addRow(new Object[]{
+                rs.getString("nome_categoria"),
+            });
+
+        }
+
+        } catch(Exception e){
+
+            System.out.println("Erro: " + e);
+
+    }
+        jTextFieldNomeCategoria.setText("");
+        
+    }//GEN-LAST:event_jButtonCadastrarActionPerformed
+
+    private void jTextFieldNomeCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeCategoriaActionPerformed
+       
+    }//GEN-LAST:event_jTextFieldNomeCategoriaActionPerformed
+
+    private void jTextFieldNomeCategoriaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeCategoriaKeyReleased
+        
+        if(!jTextFieldNomeCategoria.getText().trim().isEmpty()){
+        jButtonCadastrar.setEnabled(true);
+    }else{
+        jButtonCadastrar.setEnabled(false);
+    }
+    }//GEN-LAST:event_jTextFieldNomeCategoriaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JLabel jLabelDesc;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTableCadastros;
+    private javax.swing.JTextField jTextFieldNomeCategoria;
     // End of variables declaration//GEN-END:variables
 }
