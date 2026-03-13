@@ -43,13 +43,13 @@ public class Forma_PAG2 extends javax.swing.JInternalFrame {
 
         jTableFormaPag2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Taxa"
             }
         ));
         jScrollPane1.setViewportView(jTableFormaPag2);
