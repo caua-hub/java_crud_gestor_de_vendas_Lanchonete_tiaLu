@@ -4,6 +4,8 @@
  */
 package MyFrames;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author joaoa
@@ -38,6 +40,11 @@ public class Formas_PAG extends javax.swing.JInternalFrame {
         jLabelDesc.setText("Descrição:");
 
         jButtonCadastrar.setText("CADASTAR");
+        jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadastrarActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,6 +90,10 @@ public class Formas_PAG extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
+      
+    }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
