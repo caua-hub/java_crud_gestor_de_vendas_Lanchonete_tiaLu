@@ -34,8 +34,8 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Desktop = new javax.swing.JDesktopPane();
         jLImagem = new javax.swing.JLabel();
+        Desktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuFile = new javax.swing.JMenu();
         mnuSair = new javax.swing.JMenuItem();
@@ -50,23 +50,19 @@ public class MainFrame extends javax.swing.JFrame {
         mnuVendas = new javax.swing.JMenu();
         mnuVendas1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLImagem.setIcon(new javax.swing.ImageIcon("C:\\Users\\joaoa\\OneDrive\\Desktop\\ChatGPT Image 10 de mar. de 2026, 15_49_33 (1).png")); // NOI18N
 
-        Desktop.setLayer(jLImagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
         Desktop.setLayout(DesktopLayout);
         DesktopLayout.setHorizontalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLImagem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 627, Short.MAX_VALUE)
         );
         DesktopLayout.setVerticalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DesktopLayout.createSequentialGroup()
-                .addComponent(jLImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 419, Short.MAX_VALUE)
         );
 
         mnuFile.setText("File");
