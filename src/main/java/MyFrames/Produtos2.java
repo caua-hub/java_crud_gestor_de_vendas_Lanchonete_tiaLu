@@ -4,6 +4,14 @@
  */
 package MyFrames;
 
+import Conexao.Conexao;
+import Dao.ProdutoDAO;
+import com.mycompany.projetopoo.MainFrame;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joaoa
@@ -15,6 +23,7 @@ public class Produtos2 extends javax.swing.JInternalFrame {
      */
     public Produtos2() {
         initComponents();
+        carregarComboBoxCategoria();
     }
 
     /**
@@ -36,13 +45,32 @@ public class Produtos2 extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Produtos");
 
-        jComboBoxProdutos2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxProdutos2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProdutos2ActionPerformed(evt);
+            }
+        });
 
         jButtonCConsultarProduto.setText("Consultar");
+        jButtonCConsultarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCConsultarProdutoActionPerformed(evt);
+            }
+        });
 
         jButtonExcluirCProd.setText("Excluir");
+        jButtonExcluirCProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirCProdActionPerformed(evt);
+            }
+        });
 
         jButtonAtualizarCProd.setText("Atualizar");
+        jButtonAtualizarCProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarCProdActionPerformed(evt);
+            }
+        });
 
         jTableConsultarProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -52,7 +80,7 @@ public class Produtos2 extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Preço", "Estoque", "ID"
             }
         ));
         jScrollPane1.setViewportView(jTableConsultarProd);
@@ -87,14 +115,105 @@ public class Produtos2 extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonExcluirCProd, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jButtonAtualizarCProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(175, 175, 175))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBoxProdutos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProdutos2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxProdutos2ActionPerformed
+
+    private void jButtonCConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCConsultarProdutoActionPerformed
+    Object itemSelecionado = jComboBoxProdutos2.getSelectedItem();
+
+    if (itemSelecionado == null) {
+        JOptionPane.showMessageDialog(this, "Selecione uma categoria.");
+        return;
+    }
+
+    String categoria = itemSelecionado.toString();
+
+    if (categoria.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Selecione uma categoria.");
+        return;
+    }
+
+    ProdutoDAO.consultarProdutosPorCategoria(categoria, jTableConsultarProd);
+    }//GEN-LAST:event_jButtonCConsultarProdutoActionPerformed
+
+    private void jButtonExcluirCProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirCProdActionPerformed
+
+            int linhaSelecionada = jTableConsultarProd.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione um produto na tabela para excluir.");
+        return;
+    }
+
+    int idProduto = Integer.parseInt(jTableConsultarProd.getValueAt(linhaSelecionada, 3).toString());
+
+    int resposta = JOptionPane.showConfirmDialog(
+            this,
+            "Deseja realmente excluir este produto?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (resposta == JOptionPane.YES_OPTION) {
+        ProdutoDAO.excluirProduto(idProduto);
+
+        Object itemSelecionado = jComboBoxProdutos2.getSelectedItem();
+        if (itemSelecionado != null) {
+            String categoria = itemSelecionado.toString();
+            ProdutoDAO.consultarProdutosPorCategoria(categoria, jTableConsultarProd);
+        }
+    }
+
+    }//GEN-LAST:event_jButtonExcluirCProdActionPerformed
+
+    private void jButtonAtualizarCProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarCProdActionPerformed
+
+            Object itemSelecionado = jComboBoxProdutos2.getSelectedItem();
+
+    if (itemSelecionado == null) {
+        JOptionPane.showMessageDialog(this, "Selecione uma categoria para atualizar a consulta.");
+        return;
+    }
+
+    String categoria = itemSelecionado.toString();
+
+    if (categoria.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Selecione uma categoria para atualizar a consulta.");
+        return;
+    }
+
+    ProdutoDAO.consultarProdutosPorCategoria(categoria, jTableConsultarProd);
+
+    }//GEN-LAST:event_jButtonAtualizarCProdActionPerformed
+
+        private void carregarComboBoxCategoria(){
+        var conn = Conexao.conectar();
+        
+        try {
+            String sql = "SELECT nome_categoria FROM categorias";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+            jComboBoxProdutos2.addItem(rs.getString("nome_categoria"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro!");
+            System.getLogger(MainFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAtualizarCProd;
@@ -105,3 +224,5 @@ public class Produtos2 extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableConsultarProd;
     // End of variables declaration//GEN-END:variables
 }
+
+

@@ -38,8 +38,6 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         jLabel1Cvendas.setText("Consulta de vendas");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jButton1ConsultarV.setText("Consultar");
 
         jLabel2FormaPag.setText("Formas de pagamento");
@@ -52,7 +50,7 @@ public class Vendas extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Preço", "Quantidade", "Valor total"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
