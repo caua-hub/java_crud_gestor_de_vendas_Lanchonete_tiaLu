@@ -24,6 +24,7 @@ public class Categoria extends javax.swing.JInternalFrame {
      */
     public Categoria() {
         initComponents();
+        jButtonCadastrar.setEnabled(false);
     }
 
     /**

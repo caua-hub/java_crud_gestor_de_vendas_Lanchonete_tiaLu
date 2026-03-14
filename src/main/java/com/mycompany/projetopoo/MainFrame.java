@@ -4,6 +4,7 @@
  */
 package com.mycompany.projetopoo;
 
+import Conexao.Conexao;
 import MyFrames.Categoria;
 import MyFrames.Forma_PAG2;
 import MyFrames.Formas_PAG;
@@ -11,6 +12,9 @@ import MyFrames.Produtos;
 import MyFrames.Produtos2;
 import MyFrames.Vendas;
 import MyFrames.Vendas1;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -49,8 +53,6 @@ public class MainFrame extends javax.swing.JFrame {
         mnuCvendas = new javax.swing.JMenuItem();
         mnuVendas = new javax.swing.JMenu();
         mnuVendas1 = new javax.swing.JMenuItem();
-
-        jLImagem.setIcon(new javax.swing.ImageIcon("C:\\Users\\joaoa\\OneDrive\\Desktop\\ChatGPT Image 10 de mar. de 2026, 15_49_33 (1).png")); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,6 +167,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSairActionPerformed
@@ -181,10 +184,15 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCategoriaActionPerformed
 
     private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed
-        // TODO add your handling code here:
-        Produtos prd = new Produtos();
-        Desktop.add(prd);
-        prd.setVisible(true);
+        
+            // TODO add your handling code here:
+            Produtos prd = new Produtos();
+            Desktop.add(prd);
+            prd.setVisible(true);
+            
+        
+        
+
     }//GEN-LAST:event_mnuProdutoActionPerformed
 
     private void mnuFPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFPagActionPerformed

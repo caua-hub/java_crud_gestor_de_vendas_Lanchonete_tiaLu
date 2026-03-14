@@ -14,6 +14,8 @@ public class Produto {
     private Double preco;
     private Integer estoque;
     private Integer id_cat;
+    
+    
 
     public Integer getId() {
         return id;

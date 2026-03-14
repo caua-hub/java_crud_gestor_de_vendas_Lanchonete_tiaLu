@@ -4,6 +4,11 @@
  */
 package MyFrames;
 
+import Conexao.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,6 +22,7 @@ public class Formas_PAG extends javax.swing.JInternalFrame {
      */
     public Formas_PAG() {
         initComponents();
+        jButtonCadastrar.setEnabled(false);
     }
 
     /**
@@ -28,16 +34,22 @@ public class Formas_PAG extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelDesc = new javax.swing.JLabel();
         jTextFieldDesc = new javax.swing.JTextField();
         jButtonCadastrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableFormaPag = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldTaxa = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Formas de Pagamento");
 
-        jLabelDesc.setText("Descrição:");
+        jTextFieldDesc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldDescKeyReleased(evt);
+            }
+        });
 
         jButtonCadastrar.setText("CADASTAR");
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -46,18 +58,35 @@ public class Formas_PAG extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableFormaPag.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Nome", "Forma", "Taxa"
+                "Nome", "Taxa"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableFormaPag);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Nome:");
+
+        jTextFieldTaxa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldTaxaKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Taxa:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,41 +95,117 @@ public class Formas_PAG extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelDesc)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextFieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldTaxa, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(3, 3, 3)
+                        .addComponent(jTextFieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTaxa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jButtonCadastrar)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
-      
+        String nome = jTextFieldDesc.getText();
+        String taxa = jTextFieldTaxa.getText();
+        
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt;
+        ResultSet rs;
+        String sql = "INSERT INTO forma_pagamento (nome_forn_pag, taxa) VALUES (?, ?)";
+        
+        try{
+            stmt = conn.prepareStatement(sql);
+    
+
+            stmt.setString(1, nome);
+            
+            stmt.setDouble(2, Double.parseDouble(taxa));
+
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Taxa cadastrada com sucesso!");
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        DefaultTableModel modelo = (DefaultTableModel) jTableFormaPag.getModel();
+        modelo.setNumRows(0); // limpa tabela
+
+        try {
+
+            
+
+            stmt = conn.prepareStatement("SELECT * FROM forma_pagamento");
+
+            rs = stmt.executeQuery();
+
+        while(rs.next()){
+
+            modelo.addRow(new Object[]{
+                rs.getString("nome_forn_pag"),
+                rs.getDouble("taxa")
+            });
+
+        }
+
+        } catch(Exception e){
+
+            System.out.println("Erro: " + e);
+
+    }
+        jTextFieldDesc.setText("");
+        jTextFieldTaxa.setText("");
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
+
+    private void jTextFieldDescKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDescKeyReleased
+        // TODO add your handling code here
+        if(!jTextFieldDesc.getText().trim().isEmpty() && !jTextFieldTaxa.getText().trim().isEmpty()){
+        jButtonCadastrar.setEnabled(true);
+        }else{
+        jButtonCadastrar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldDescKeyReleased
+
+    private void jTextFieldTaxaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTaxaKeyReleased
+        // TODO add your handling code here:
+        if(!jTextFieldDesc.getText().trim().isEmpty() && !jTextFieldTaxa.getText().trim().isEmpty()){
+        jButtonCadastrar.setEnabled(true);
+        }else{
+        jButtonCadastrar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldTaxaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCadastrar;
-    private javax.swing.JLabel jLabelDesc;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableFormaPag;
     private javax.swing.JTextField jTextFieldDesc;
+    private javax.swing.JTextField jTextFieldTaxa;
     // End of variables declaration//GEN-END:variables
 }

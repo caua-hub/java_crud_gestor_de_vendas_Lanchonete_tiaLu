@@ -4,6 +4,16 @@
  */
 package MyFrames;
 
+import Conexao.Conexao;
+import Model.Produto;
+import com.mycompany.projetopoo.MainFrame;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author joaoa
@@ -14,7 +24,10 @@ public class Produtos extends javax.swing.JInternalFrame {
      * Creates new form Produtos
      */
     public Produtos() {
+        
         initComponents();
+        carregarComboBoxCategoria();
+        jButtonAdicionar.setEnabled(false);
     }
 
     /**
@@ -26,44 +39,94 @@ public class Produtos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelDesc = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jTextFieldNomeProduto = new javax.swing.JTextField();
         jTextFieldPreco = new javax.swing.JTextField();
-        jLabelEstoque = new javax.swing.JLabel();
         jTextFieldEstoque = new javax.swing.JTextField();
         jComboBoxProdutos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableProdutos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButtonAtualizar = new javax.swing.JButton();
+        jButtonAdicionar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Produtos");
 
-        jLabelDesc.setText("Descrição:");
+        jTextFieldNomeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldNomeProdutoKeyReleased(evt);
+            }
+        });
 
-        jLabel1.setText("Preço:");
+        jTextFieldPreco.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldPrecoKeyReleased(evt);
+            }
+        });
 
-        jLabelEstoque.setText("Estoque:");
+        jTextFieldEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldEstoqueActionPerformed(evt);
+            }
+        });
+        jTextFieldEstoque.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldEstoqueKeyReleased(evt);
+            }
+        });
 
-        jComboBoxProdutos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria" }));
         jComboBoxProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxProdutosActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nome", "Estoque", "Preço", "ID"
+                "Nome", "Preço", "Estoque", "ID"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableProdutos);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Nome:");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Estoque:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setText("Preço:");
+
+        jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
+
+        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setText("Categorias:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,46 +134,58 @@ public class Produtos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelEstoque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextFieldEstoque, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jComboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jButtonAdicionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonAtualizar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1))
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jTextFieldEstoque))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jComboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)))))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jComboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAtualizar)
+                    .addComponent(jButtonAdicionar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -120,16 +195,140 @@ public class Produtos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxProdutosActionPerformed
 
+    private void jTextFieldEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEstoqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldEstoqueActionPerformed
+
+    private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
+        // TODO add your handling code here:
+        String nome = jTextFieldNomeProduto.getText();
+        String estoque = jTextFieldEstoque.getText();
+        String preco = jTextFieldPreco.getText();
+        String categoria = jComboBoxProdutos.getSelectedItem().toString();
+        
+        var conn = Conexao.conectar();
+
+            String sql = "INSERT INTO produto(nome, estoque, preco, id_cat) VALUES (?, ?, ?, ?)";
+            String sql2 = "SELECT id_categoria FROM categorias WHERE nome_categoria = ?";
+            try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt2 = conn.prepareStatement(sql2);
+
+            stmt2.setString(1, categoria);
+
+            ResultSet rs = stmt2.executeQuery();
+
+            int idCategoria = 0;
+
+            if(rs.next()){
+                idCategoria = rs.getInt("id_categoria");
+            }
+
+            stmt.setString(1, nome);
+            stmt.setInt(2, Integer.parseInt(estoque));
+            stmt.setDouble(3, Double.parseDouble(preco));
+            stmt.setInt(4, idCategoria);
+
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        jTextFieldEstoque.setText("");
+        jTextFieldNomeProduto.setText("");
+        jTextFieldPreco.setText("");
+    }//GEN-LAST:event_jButtonAdicionarActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        // TODO add your handling code here:
+        Connection conn;
+        PreparedStatement stmt;
+        ResultSet rs;
+
+        DefaultTableModel modelo = (DefaultTableModel) jTableProdutos.getModel();
+        modelo.setNumRows(0); // limpa tabela
+        
+        try {
+
+            conn = Conexao.conectar();
+
+            stmt = conn.prepareStatement("SELECT * FROM produto");
+
+            rs = stmt.executeQuery();
+
+        while(rs.next()){
+
+            modelo.addRow(new Object[]{
+                rs.getString("nome"),
+                rs.getDouble("preco"),
+                rs.getInt("Estoque"),
+                rs.getInt("id_cat")
+            });
+
+        }
+
+        } catch(Exception e){
+
+            System.out.println("Erro: " + e);
+
+    }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
+
+    private void jTextFieldNomeProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoKeyReleased
+        // TODO add your handling code here:
+        if(!jTextFieldNomeProduto.getText().trim().isEmpty() && !jTextFieldPreco.getText().trim().isEmpty() && !jTextFieldEstoque.getText().trim().isEmpty()){
+        jButtonAdicionar.setEnabled(true);
+        }else{
+        jButtonAdicionar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldNomeProdutoKeyReleased
+
+    private void jTextFieldEstoqueKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldEstoqueKeyReleased
+        if(!jTextFieldNomeProduto.getText().trim().isEmpty() && !jTextFieldPreco.getText().trim().isEmpty() && !jTextFieldEstoque.getText().trim().isEmpty()){
+        jButtonAdicionar.setEnabled(true);
+        }else{
+        jButtonAdicionar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldEstoqueKeyReleased
+
+    private void jTextFieldPrecoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecoKeyReleased
+        // TODO add your handling code here:
+        if(!jTextFieldNomeProduto.getText().trim().isEmpty() && !jTextFieldPreco.getText().trim().isEmpty() && !jTextFieldEstoque.getText().trim().isEmpty()){
+        jButtonAdicionar.setEnabled(true);
+        }else{
+        jButtonAdicionar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldPrecoKeyReleased
+    private void carregarComboBoxCategoria(){
+        var conn = Conexao.conectar();
+        
+        try {
+            String sql = "SELECT nome_categoria FROM categorias";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+            jComboBoxProdutos.addItem(rs.getString("nome_categoria"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro!");
+            System.getLogger(MainFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdicionar;
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JComboBox<String> jComboBoxProdutos;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelDesc;
-    private javax.swing.JLabel jLabelEstoque;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTableProdutos;
     private javax.swing.JTextField jTextFieldEstoque;
+    private javax.swing.JTextField jTextFieldNomeProduto;
     private javax.swing.JTextField jTextFieldPreco;
     // End of variables declaration//GEN-END:variables
 }
