@@ -4,6 +4,13 @@
  */
 package MyFrames;
 
+import Conexao.Conexao;
+import com.mycompany.projetopoo.MainFrame;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joaoa
@@ -47,7 +54,6 @@ public class Vendas1 extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Categoria");
 
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriaActionPerformed(evt);
@@ -55,8 +61,6 @@ public class Vendas1 extends javax.swing.JInternalFrame {
         });
 
         jLabel2.setText("Produto");
-
-        jComboBoxProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setText("Quantidade");
 
@@ -95,7 +99,7 @@ public class Vendas1 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(7, Short.MAX_VALUE)
+                        .addContainerGap(36, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -173,6 +177,8 @@ public class Vendas1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
 
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddItem;
     private javax.swing.JButton jButtonConcluirVenda;

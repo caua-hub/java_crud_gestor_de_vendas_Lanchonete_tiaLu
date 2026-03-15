@@ -4,6 +4,9 @@
  */
 package MyFrames;
 
+import Dao.FormaPagamentoDAO;
+import javax.swing.JOptionPane;
+
 /**
  *ggs
  * @author joaoa
@@ -26,52 +29,86 @@ public class Forma_PAG2 extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jButtonConsultar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonAtualizar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
         jTableFormaPag2 = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setClosable(true);
         setTitle("Formas de Pagamento");
 
         jButtonConsultar.setText("Consultar");
+        jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultarActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
 
         jTableFormaPag2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Nome", "Taxa"
+                "Nome", "Taxa", "ID"
             }
-        ));
-        jScrollPane1.setViewportView(jTableFormaPag2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTableFormaPag2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(101, 101, 101)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButtonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,20 +119,101 @@ public class Forma_PAG2 extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
+        
+        atualizarTabelaFormaPagamento();
+        
+    }//GEN-LAST:event_jButtonConsultarActionPerformed
 
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+
+            int linhaSelecionada = jTableFormaPag2.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma forma de pagamento na tabela para excluir.");
+        return;
+    }
+
+    int idFormaPagamento = Integer.parseInt(
+            jTableFormaPag2.getValueAt(linhaSelecionada, 2).toString()
+    );
+
+    int resposta = JOptionPane.showConfirmDialog(
+            this,
+            "Deseja realmente excluir esta forma de pagamento?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (resposta == JOptionPane.YES_OPTION) {
+        FormaPagamentoDAO.excluirFormaPagamento(idFormaPagamento);
+        atualizarTabelaFormaPagamento();
+    }
+        
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+
+                int linhaSelecionada = jTableFormaPag2.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma forma de pagamento na tabela para atualizar.");
+        return;
+    }
+
+    int idFormaPagamento = Integer.parseInt(
+            jTableFormaPag2.getValueAt(linhaSelecionada, 2).toString()
+    );
+
+    String nomeAtual = jTableFormaPag2.getValueAt(linhaSelecionada, 0).toString();
+    String taxaAtual = jTableFormaPag2.getValueAt(linhaSelecionada, 1).toString();
+
+    String novoNome = JOptionPane.showInputDialog(this, "Digite o novo nome:", nomeAtual);
+
+    if (novoNome == null || novoNome.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "O nome não pode ficar vazio.");
+        return;
+    }
+
+    String novaTaxaTexto = JOptionPane.showInputDialog(this, "Digite a nova taxa:", taxaAtual);
+
+    if (novaTaxaTexto == null || novaTaxaTexto.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "A taxa não pode ficar vazia.");
+        return;
+    }
+
+    try {
+        double novaTaxa = Double.parseDouble(novaTaxaTexto);
+
+        FormaPagamentoDAO.atualizarFormaPagamento(idFormaPagamento, novoNome, novaTaxa);
+        atualizarTabelaFormaPagamento();
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Digite um valor numérico válido para a taxa.");
+    }
+
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
+
+    private void atualizarTabelaFormaPagamento() {
+    FormaPagamentoDAO.consultarFormasPagamento(jTableFormaPag2);
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTableFormaPag2;
     // End of variables declaration//GEN-END:variables
 }
