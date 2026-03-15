@@ -4,6 +4,10 @@
  */
 package MyFrames;
 
+import Dao.VendaDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -16,6 +20,8 @@ public class Vendas extends javax.swing.JInternalFrame {
      */
     public Vendas() {
         initComponents();
+            configurarTabelaVendas();
+            carregarFormasPagamentoNoCombo();
     }
 
     /**
@@ -40,6 +46,11 @@ public class Vendas extends javax.swing.JInternalFrame {
         jLabel1Cvendas.setText("Consulta de vendas");
 
         jButton1ConsultarV.setText("Consultar");
+        jButton1ConsultarV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ConsultarVActionPerformed(evt);
+            }
+        });
 
         jLabel2FormaPag.setText("Formas de pagamento");
 
@@ -48,7 +59,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Preço", "Quantidade", "Valor total"
+                "ID Venda", "Forma Pagamento", "Quantidade", "Valor total"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -98,6 +109,12 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ConsultarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ConsultarVActionPerformed
+
+        consultarVendas();
+
+    }//GEN-LAST:event_jButton1ConsultarVActionPerformed
     
 
 
@@ -109,4 +126,55 @@ public class Vendas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void configurarTabelaVendas() {
+        jTable1.setModel(new DefaultTableModel(
+        new Object[][]{},
+        new String[]{"ID Venda", "Forma de Pagamento", "Quantidade", "Valor Total"}
+    ) {
+        Class[] types = new Class[]{
+            java.lang.Integer.class,
+            java.lang.String.class,
+            java.lang.Integer.class,
+            java.lang.Double.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types[columnIndex];
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+    });
+    }
+
+    private void carregarFormasPagamentoNoCombo() {
+        
+           VendaDAO.carregarFormasPagamentoConsulta(jComboBox1);
+
+    }
+    
+    
+    private void consultarVendas() {
+    Object formaSelecionada = jComboBox1.getSelectedItem();
+
+    if (formaSelecionada == null) {
+        JOptionPane.showMessageDialog(this, "Selecione uma forma de pagamento.");
+        return;
+    }
+
+    String formaPagamento = formaSelecionada.toString();
+
+    if (formaPagamento.equals("Selecione")) {
+        JOptionPane.showMessageDialog(this, "Selecione uma forma de pagamento.");
+        return;
+    }
+
+    VendaDAO.consultarVendasPorFormaPagamento(formaPagamento, jTable1);
+    }
+    
+
 }
+
+
