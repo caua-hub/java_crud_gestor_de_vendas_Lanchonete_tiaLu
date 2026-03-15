@@ -74,10 +74,7 @@ public class Produtos2 extends javax.swing.JInternalFrame {
 
         jTableConsultarProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Nome", "Preço", "Estoque", "ID"
