@@ -76,7 +76,7 @@ public class Vendas1 extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Produto", "Preço", "Quantidade"
+                "ID", "Produto", "Preço", "Estoque"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,7 +98,7 @@ public class Vendas1 extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nome", "Quantidade", "preço"
+                "ID", "Nome", "Quantidade", "Preço", "Subtotal"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -135,35 +135,38 @@ public class Vendas1 extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jButtonAddItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(222, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jButtonAddItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
+                        .addComponent(jComboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextFieldTotalVendas, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING, 0, 185, Short.MAX_VALUE))
-                            .addComponent(jButtonConcluirVenda)
-                            .addComponent(jComboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                            .addComponent(jTextFieldTotalVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6)
+                                .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5))
+                            .addComponent(jButtonConcluirVenda))
+                        .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,13 +196,13 @@ public class Vendas1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldTotalVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonConcluirVenda))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -273,7 +276,13 @@ public class Vendas1 extends javax.swing.JInternalFrame {
                 nome = rs.getString("nome");    
                 preco = rs.getDouble("preco");
 
-                model.addRow(new Object[]{nome, quantidade, preco});
+                int idProduto = Integer.parseInt(jTable1.getValueAt(linha, 0).toString());
+                double subtotal = preco * quantidade;
+                
+                model.addRow(new Object[]{idProduto, nome, quantidade, preco, subtotal});
+                   
+                
+                
             }
 
         } catch(SQLException ex){
@@ -295,7 +304,7 @@ public class Vendas1 extends javax.swing.JInternalFrame {
 
     private void jButtonConcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConcluirVendaActionPerformed
         
-        
+        concluirVenda();
         
     }//GEN-LAST:event_jButtonConcluirVendaActionPerformed
 
@@ -339,6 +348,8 @@ public class Vendas1 extends javax.swing.JInternalFrame {
     private void carregarTableProdutoPorCategoria() {
         var conn = Conexao.conectar();
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        
         try {
             
 
@@ -407,25 +418,10 @@ public class Vendas1 extends javax.swing.JInternalFrame {
    //     var conn = Conexao.conectar();
 
         for (int i = 0; i < model2.getRowCount(); i++) {
-            String nome = (String) model2.getValueAt(i, 0);
-            int quantidade = (int) model2.getValueAt(i, 1);
-            double preco = (double) model2.getValueAt(i, 2);
-
-            
- //           String sql = "SELECT preco FROM produto WHERE id = ?";
- //           PreparedStatement stmt = conn.prepareStatement(sql);
- //           stmt.setString(1, nome);
- //           ResultSet rs = stmt.executeQuery();
-  //          double preco2 = 0;
-  //          if (rs.next()) {
-  //              preco2 = rs.getDouble("preco");
-   //         }
-
-            double valorItem = (preco * quantidade);
-            valorTotal += valorItem;
-
-            
-//            model2.addRow(new Object[]{produto, quantidade, valorItem});
+        
+                double subtotal = Double.parseDouble(model2.getValueAt(i, 4).toString());
+                valorTotal += subtotal;
+        
         }
 
        valorTotal = valorTotal + (valorTotal * (taxa_formaPagamento / 100));
@@ -455,6 +451,138 @@ public class Vendas1 extends javax.swing.JInternalFrame {
     }
     
     
+    //Criando o metodo de concluir vendas
+    private void concluirVenda() {
+    DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
+
+    if (model2.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(rootPane, "Adicione pelo menos um item à venda!");
+        return;
+    }
+
+    Object formaSelecionada = jComboBoxFormaPagamento.getSelectedItem();
+
+    if (formaSelecionada == null) {
+    JOptionPane.showMessageDialog(rootPane, "Selecione uma forma de pagamento!");
+    return;
+    }
+
+    String formaPagamento = formaSelecionada.toString();
+
+    if (formaPagamento.trim().isEmpty()) {
+    JOptionPane.showMessageDialog(rootPane, "Selecione uma forma de pagamento!");
+    return;
+    }
+
+    if (formaPagamento == null || formaPagamento.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(rootPane, "Selecione uma forma de pagamento!");
+        return;
+    }
+
+    String totalStr = jTextFieldTotalVendas.getText();
+
+    if (totalStr == null || totalStr.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(rootPane, "O valor total da venda está vazio!");
+        return;
+    }
+
+    double valorTotal;
+
+    try {
+        valorTotal = Double.parseDouble(totalStr.replace(",", "."));
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(rootPane, "Valor total inválido!");
+        return;
+    }
+
+    var conn = Conexao.conectar();
+
+    try {
+        conn.setAutoCommit(false);
+
+        int idFormaPagamento = 0;
+
+        String sqlForma = "SELECT id_form_pagamento FROM forma_pagamento WHERE nome_forn_pag = ?";
+        PreparedStatement stmtForma = conn.prepareStatement(sqlForma);
+        stmtForma.setString(1, formaPagamento);
+        ResultSet rsForma = stmtForma.executeQuery();
+
+        if (rsForma.next()) {
+            idFormaPagamento = rsForma.getInt("id_form_pagamento");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Forma de pagamento não encontrada!");
+            conn.rollback();
+            return;
+        }
+
+        String sqlVenda = "INSERT INTO vendas (id_form_pag, valor_total) VALUES (?, ?)";
+        PreparedStatement stmtVenda = conn.prepareStatement(sqlVenda, PreparedStatement.RETURN_GENERATED_KEYS);
+        stmtVenda.setInt(1, idFormaPagamento);
+        stmtVenda.setDouble(2, valorTotal);
+        stmtVenda.executeUpdate();
+
+        ResultSet rsVenda = stmtVenda.getGeneratedKeys();
+        int idVenda = 0;
+
+        if (rsVenda.next()) {
+            idVenda = rsVenda.getInt(1);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao gerar ID da venda!");
+            conn.rollback();
+            return;
+        }
+
+        String sqlItem = "INSERT INTO item_venda (id_prod, id_vend, quantidade, preco_unitario, subtotal) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmtItem = conn.prepareStatement(sqlItem);
+
+        String sqlEstoque = "UPDATE produto SET estoque = estoque - ? WHERE id = ?";
+        PreparedStatement stmtEstoque = conn.prepareStatement(sqlEstoque);
+
+        for (int i = 0; i < model2.getRowCount(); i++) {
+            int idProduto = Integer.parseInt(model2.getValueAt(i, 0).toString());
+            int quantidade = Integer.parseInt(model2.getValueAt(i, 2).toString());
+            double preco = Double.parseDouble(model2.getValueAt(i, 3).toString());
+            double subtotal = Double.parseDouble(model2.getValueAt(i, 4).toString());
+
+            stmtItem.setInt(1, idProduto);
+            stmtItem.setInt(2, idVenda);
+            stmtItem.setInt(3, quantidade);
+            stmtItem.setDouble(4, preco);
+            stmtItem.setDouble(5, subtotal);
+            stmtItem.executeUpdate();
+
+            stmtEstoque.setInt(1, quantidade);
+            stmtEstoque.setInt(2, idProduto);
+            stmtEstoque.executeUpdate();
+        }
+
+        conn.commit();
+
+        JOptionPane.showMessageDialog(rootPane, "Venda concluída com sucesso!");
+
+        limparTelaVenda();
+
+    } catch (SQLException ex) {
+        try {
+            conn.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        JOptionPane.showMessageDialog(rootPane, "Erro ao concluir venda:" + ex.getMessage());
+        ex.printStackTrace();
+
+    } finally {
+        try {
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddItem;
     private javax.swing.JButton jButtonConcluirVenda;
@@ -473,4 +601,18 @@ public class Vendas1 extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldTotalVendas;
     private javax.swing.JTextField txtQuantidade;
     // End of variables declaration//GEN-END:variables
+
+    private void limparTelaVenda() {
+
+            ((DefaultTableModel) jTable2.getModel()).setRowCount(0);
+    txtQuantidade.setText("");
+    jTextFieldTotalVendas.setText("");
+
+    if (jComboBoxCategoria.getItemCount() > 0) {
+        jComboBoxCategoria.setSelectedIndex(0);
+    }
+
+    atualizarListaVenda();
+        
+    }
 }
