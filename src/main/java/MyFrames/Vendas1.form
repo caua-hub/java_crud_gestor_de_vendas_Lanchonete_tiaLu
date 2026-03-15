@@ -127,8 +127,11 @@
     <Component class="javax.swing.JComboBox" name="jComboBoxCategoria">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Selecione"/>
+          </StringArray>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxCategoriaActionPerformed"/>
@@ -145,7 +148,9 @@
     <Component class="javax.swing.JComboBox" name="jComboBoxProduto">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Selecione"/>
+          </StringArray>
         </Property>
       </Properties>
       <AuxValues>
@@ -205,6 +210,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Adicionar item"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddItemActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -264,6 +272,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Concluir venda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConcluirVendaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

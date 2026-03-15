@@ -9,7 +9,10 @@ import com.mycompany.projetopoo.MainFrame;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +26,7 @@ public class Vendas1 extends javax.swing.JInternalFrame {
     public Vendas1() {
         initComponents();
         carregarComboBoxCategoria();
-        carregarComboBoxProduto();
+        carregarComboBoxProdutoPorCategoria();
     }
 
     /**
@@ -56,6 +59,8 @@ public class Vendas1 extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Categoria");
 
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        jComboBoxCategoria.setToolTipText("");
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriaActionPerformed(evt);
@@ -63,6 +68,8 @@ public class Vendas1 extends javax.swing.JInternalFrame {
         });
 
         jLabel2.setText("Produto");
+
+        jComboBoxProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
 
         jLabel3.setText("Quantidade");
 
@@ -77,6 +84,11 @@ public class Vendas1 extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButtonAddItem.setText("Adicionar item");
+        jButtonAddItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddItemActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,6 +105,11 @@ public class Vendas1 extends javax.swing.JInternalFrame {
         jLabel5.setText("Valor total da venda:");
 
         jButtonConcluirVenda.setText("Concluir venda");
+        jButtonConcluirVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConcluirVendaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,44 +192,157 @@ public class Vendas1 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaActionPerformed
-
+         carregarComboBoxProdutoPorCategoria();
+         
     }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
 
-    private void carregarComboBoxCategoria(){
-        var conn = Conexao.conectar();
-        
+    private void jButtonAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddItemActionPerformed
+        // TODO add your handling code here
+        String produto = (String) jComboBoxProduto.getSelectedItem();
+        String qtdStr = txtQuantidade.getText();
+
+        if(produto == null || produto.equals("") || qtdStr.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos!");
+            return;
+        }
+
+        int quantidade = 0;
         try {
+            quantidade = Integer.parseInt(qtdStr);
+            if(quantidade <= 0){
+                JOptionPane.showMessageDialog(rootPane, "Quantidade deve ser maior que zero!");
+                return;
+            }
+        } catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(rootPane, "Quantidade inválida!");
+            return;
+        }
+
+        
+        int idProduto = 0;
+        try {
+            var conn = Conexao.conectar();
+            String sql = "SELECT id FROM produto WHERE nome = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, produto);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                idProduto = rs.getInt("id"); 
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Produto não encontrado!");
+                return;
+            }
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(rootPane, "Erro ao buscar produto!");
+            ex.printStackTrace();
+            return;
+        }
+
+      
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{idProduto, produto, quantidade});
+
+        
+        txtQuantidade.setText("");
+        
+        atualizarListaVenda();
+    }//GEN-LAST:event_jButtonAddItemActionPerformed
+
+    private void jButtonConcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConcluirVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonConcluirVendaActionPerformed
+
+    private void carregarComboBoxCategoria() {
+        var conn = Conexao.conectar();
+
+        try {
+            jComboBoxCategoria.removeAllItems();
+            jComboBoxCategoria.addItem("Selecione");
+
             String sql = "SELECT nome_categoria FROM categorias";
-            
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-            jComboBoxCategoria.addItem(rs.getString("nome_categoria"));
+
+            while (rs.next()) {
+                jComboBoxCategoria.addItem(rs.getString("nome_categoria"));
             }
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Erro!");
-            System.getLogger(MainFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro ao carregar categorias!");
+            ex.printStackTrace();
         }
-    }
+ }
     
-    private void carregarComboBoxProduto(){
+    private void carregarComboBoxProdutoPorCategoria() {
         var conn = Conexao.conectar();
-        
+
         try {
-            String sql = "SELECT nome FROM produto";
-            
+            jComboBoxProduto.removeAllItems(); 
+
+            String categoriaSelecionada = (String) jComboBoxCategoria.getSelectedItem();
+            if (categoriaSelecionada == null || categoriaSelecionada.equals("Selecione")) {
+                return;             }
+
+            String sql = "SELECT p.nome " +
+                         "FROM produto p " +
+                         "INNER JOIN categorias c ON p.id_cat = c.id_categoria " +
+                         "WHERE c.nome_categoria = ?";
+
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, categoriaSelecionada);
             ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-            jComboBoxProduto.addItem(rs.getString("nome"));
+
+            while (rs.next()) {
+                jComboBoxProduto.addItem(rs.getString("nome"));
             }
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Erro!");
-            System.getLogger(MainFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro ao carregar produtos!");
+            ex.printStackTrace();
         }
+  }
+    
+    
+    private void atualizarListaVenda() {
+    DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
+    DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
+    model2.setRowCount(0); 
+
+    double valorTotal = 0;
+
+    try {
+        var conn = Conexao.conectar();
+
+        for (int i = 0; i < model1.getRowCount(); i++) {
+            int idProduto = (int) model1.getValueAt(i, 0);
+            String produto = (String) model1.getValueAt(i, 1);
+            int quantidade = (int) model1.getValueAt(i, 2);
+
+            
+            String sql = "SELECT preco FROM produto WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idProduto);
+            ResultSet rs = stmt.executeQuery();
+            double preco = 0;
+            if (rs.next()) {
+                preco = rs.getDouble("preco");
+            }
+
+            double valorItem = preco * quantidade;
+            valorTotal += valorItem;
+
+            
+            model2.addRow(new Object[]{produto, quantidade, valorItem});
+        }
+
+       
+        jTextFieldTotalVendas.setText(String.format("%.2f", valorTotal));
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(rootPane, "Erro ao atualizar lista da venda!");
+        ex.printStackTrace();
     }
+}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddItem;
