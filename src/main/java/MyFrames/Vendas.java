@@ -4,6 +4,7 @@
  */
 package MyFrames;
 
+
 /**
  *
  * @author joaoa
@@ -100,6 +101,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
