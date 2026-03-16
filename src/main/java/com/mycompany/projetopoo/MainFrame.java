@@ -6,6 +6,7 @@ package com.mycompany.projetopoo;
 
 import Conexao.Conexao;
 import MyFrames.Categoria;
+import MyFrames.CategoriaConsulta;
 import MyFrames.Forma_PAG2;
 import MyFrames.Formas_PAG;
 import MyFrames.Produtos;
@@ -51,6 +52,7 @@ public class MainFrame extends javax.swing.JFrame {
         mnuProdutos = new javax.swing.JMenuItem();
         mnuFormaPag2 = new javax.swing.JMenuItem();
         mnuCvendas = new javax.swing.JMenuItem();
+        jMnuCadastroConsultar = new javax.swing.JMenuItem();
         mnuVendas = new javax.swing.JMenu();
         mnuVendas1 = new javax.swing.JMenuItem();
 
@@ -132,6 +134,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         mnuConsultas.add(mnuCvendas);
+
+        jMnuCadastroConsultar.setText("Categoria");
+        jMnuCadastroConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnuCadastroConsultarActionPerformed(evt);
+            }
+        });
+        mnuConsultas.add(jMnuCadastroConsultar);
 
         jMenuBar1.add(mnuConsultas);
 
@@ -232,6 +242,15 @@ public class MainFrame extends javax.swing.JFrame {
         vd1.setVisible(true);
     }//GEN-LAST:event_mnuVendas1ActionPerformed
 
+    private void jMnuCadastroConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuCadastroConsultarActionPerformed
+        // TODO add your handling code here:
+       CategoriaConsulta cg = new CategoriaConsulta();
+       Desktop.add(cg);
+       cg.setVisible(true);
+       
+        
+    }//GEN-LAST:event_jMnuCadastroConsultarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,6 +292,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Desktop;
     private javax.swing.JLabel jLImagem;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMnuCadastroConsultar;
     private javax.swing.JMenu mnuCadastro;
     private javax.swing.JMenuItem mnuCategoria;
     private javax.swing.JMenu mnuConsultas;
