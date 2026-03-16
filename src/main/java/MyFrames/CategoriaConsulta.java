@@ -4,6 +4,10 @@
  */
 package MyFrames;
 
+import Dao.CategoriasDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author joaoa
@@ -15,6 +19,7 @@ public class CategoriaConsulta extends javax.swing.JInternalFrame {
      */
     public CategoriaConsulta() {
         initComponents();
+        configurarTabelaCategorias();
     }
 
     /**
@@ -37,10 +42,25 @@ public class CategoriaConsulta extends javax.swing.JInternalFrame {
         setToolTipText("");
 
         jButtonConsultarCat.setText("Consultar");
+        jButtonConsultarCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultarCatActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonAtualizarCat.setText("Atualizar");
+        jButtonAtualizarCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarCatActionPerformed(evt);
+            }
+        });
 
         jTableconsultarCat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,6 +111,67 @@ public class CategoriaConsulta extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonConsultarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarCatActionPerformed
+
+        atualizarTabelaCategorias();
+
+    }//GEN-LAST:event_jButtonConsultarCatActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+
+            int linhaSelecionada = jTableconsultarCat.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma categoria na tabela para excluir.");
+        return;
+    }
+
+    int idCategoria = Integer.parseInt(
+            jTableconsultarCat.getValueAt(linhaSelecionada, 0).toString()
+    );
+
+    int resposta = JOptionPane.showConfirmDialog(
+            this,
+            "Deseja realmente excluir esta categoria?",
+            "Confirmar exclusão",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (resposta == JOptionPane.YES_OPTION) {
+        CategoriasDAO.excluirCategoria(idCategoria);
+        atualizarTabelaCategorias();
+    }
+
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonAtualizarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarCatActionPerformed
+
+                int linhaSelecionada = jTableconsultarCat.getSelectedRow();
+
+    if (linhaSelecionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma categoria na tabela para atualizar.");
+        return;
+    }
+
+    int idCategoria = Integer.parseInt(
+            jTableconsultarCat.getValueAt(linhaSelecionada, 0).toString()
+    );
+
+    String nomeAtual = jTableconsultarCat.getValueAt(linhaSelecionada, 1).toString();
+
+    String novoNome = JOptionPane.showInputDialog(this, "Digite o novo nome da categoria:", nomeAtual);
+
+    if (novoNome == null || novoNome.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "O nome da categoria não pode ficar vazio.");
+        return;
+    }
+
+    CategoriasDAO.atualizarCategoria(idCategoria, novoNome);
+    atualizarTabelaCategorias();
+        
+        
+    }//GEN-LAST:event_jButtonAtualizarCatActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAtualizarCat;
@@ -99,4 +180,33 @@ public class CategoriaConsulta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableconsultarCat;
     // End of variables declaration//GEN-END:variables
+
+    private void configurarTabelaCategorias() {
+
+            jTableconsultarCat.setModel(new DefaultTableModel(
+        new Object[][]{},
+        new String[]{"ID", "Nome"}
+    ) {
+        Class[] types = new Class[]{
+            java.lang.Integer.class,
+            java.lang.String.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types[columnIndex];
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+    });
+
+    }
+    
+    private void atualizarTabelaCategorias() {
+    
+        CategoriasDAO.consultarCategorias(jTableconsultarCat);
+
+    }
+    
 }
